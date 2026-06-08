@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservasi Treatment – RW Beauty Salon & Spa</title>
+<meta name="description" content="Reservasi treatment RW Beauty Salon & Spa. Pilih treatment per orang, estimasi biaya otomatis, konfirmasi via WhatsApp.">
+<meta name="theme-color" content="#FFF9F6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:1rem}
+a{text-decoration:none;color:inherit}
+:root{
+  --primary:#B5275F;--primary-dk:#8B1A45;--primary-lt:#FCE4EF;
+  --accent:#E8729A;--accent-lt:#FDF0F5;
+  --cream:#FFF9F6;--cream-alt:#FDF3F0;
+  --text:#3D1A1A;--text-md:#6B3A48;--text-lt:#9A6875;
+  --border:#F0D0DC;--border-lt:#FAE8EF;--white:#FFFFFF;
+  --shadow:rgba(181,39,95,.10);--shadow-md:rgba(181,39,95,.16);
+  --wa:#25D366;--green:#1EAD54;--info:#1565C0;--info-lt:#E3F2FD;
+  --r:16px;--r-sm:10px;--r-lg:24px;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Nunito',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+body{font-family:var(--sans);background:var(--cream);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom,0)}
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.2}
+h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:600}
+h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600}
+p{color:var(--text-lt);line-height:1.7}
+.container{max-width:780px;margin:0 auto;padding:0 20px}
+.container-wide{max-width:1000px;margin:0 auto;padding:0 20px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:100px;font-family:var(--sans);font-size:.93rem;font-weight:700;cursor:pointer;border:none;transition:all .2s ease;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--primary-dk);transform:translateY(-1px);box-shadow:0 6px 20px var(--shadow-md)}
+.btn-wa{background:var(--wa);color:var(--white)}
+.btn-wa:hover{background:var(--green);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text-lt);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary)}
+.btn-lg{padding:16px 34px;font-size:1rem}
+.btn-full{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+.btn-hero-main{background:var(--white);color:var(--primary);font-weight:800}
+.btn-hero-main:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.btn-hero-ghost{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.5)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:300;background:rgba(255,249,246,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-lt)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:1000px;margin:0 auto;padding:0 20px}
+.nav-logo{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--primary)}
+.nav-wa-btn{display:flex;align-items:center;gap:6px;background:var(--primary-lt);color:var(--primary);font-weight:700;font-size:.82rem;padding:8px 16px;border-radius:100px;transition:all .2s;min-height:40px}
+.nav-wa-btn:hover{background:var(--primary);color:var(--white)}
+
+/* HERO — with real background photo */
+.hero{
+  background:
+    linear-gradient(135deg,rgba(181,39,95,.78) 0%,rgba(106,15,53,.88) 100%),
+    url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1400&auto=format&fit=crop&q=80') center 40%/cover no-repeat;
+  padding:52px 0 48px;text-align:center;position:relative;overflow:hidden
+}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 16px;border-radius:100px;margin-bottom:18px;border:1px solid rgba(255,255,255,.2)}
+.hero h1{color:var(--white);margin-bottom:14px}
+.hero-sub{color:rgba(255,255,255,.85);font-size:clamp(.93rem,2.5vw,1.08rem);max-width:500px;margin:0 auto 28px}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.hero-trust{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.trust-pill{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.9);font-size:.78rem;font-weight:600}
+
+/* HOW IT WORKS */
+.hiw{padding:44px 0;background:var(--white);border-bottom:1px solid var(--border-lt)}
+.hiw-title{text-align:center;margin-bottom:28px}
+.hiw-title h2{font-size:1.4rem;color:var(--text);margin-bottom:4px}
+.hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.hiw-step{text-align:center;padding:16px 12px;position:relative}
+.hiw-step-num{width:40px;height:40px;background:var(--primary-lt);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--primary)}
+.hiw-step h4{font-size:.85rem;color:var(--text);font-family:var(--sans);font-weight:700;margin-bottom:2px}
+.hiw-step p{font-size:.76rem;color:var(--text-lt)}
+@media(min-width:600px){.hiw-step:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:28px;color:var(--accent);font-size:1.1rem;font-weight:700}}
+
+/* BOOKING WRAPPER */
+.booking-section{padding:40px 0 80px}
+.booking-card{background:var(--white);border-radius:var(--r-lg);box-shadow:0 4px 32px var(--shadow);overflow:hidden}
+
+/* PROGRESS */
+.progress-bar{background:var(--cream-alt);padding:18px 24px;border-bottom:1px solid var(--border-lt)}
+.progress-steps{display:flex;align-items:center;justify-content:center}
+.prog-step{display:flex;flex-direction:column;align-items:center;flex:1;max-width:72px}
+.prog-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;transition:all .3s;z-index:1}
+.prog-dot.done{background:var(--primary);color:var(--white)}
+.prog-dot.active{background:var(--primary);color:var(--white);box-shadow:0 0 0 4px var(--primary-lt)}
+.prog-dot.pending{background:var(--border);color:var(--text-lt)}
+.prog-label{font-size:.6rem;font-weight:600;color:var(--text-lt);margin-top:4px;text-align:center;white-space:nowrap}
+.prog-label.active{color:var(--primary)}
+.prog-connector{flex:1;height:2px;background:var(--border);position:relative;top:-14px}
+.prog-connector.done{background:var(--primary)}
+
+/* STEP PANELS */
+.step-panel{display:none;padding:28px 28px 24px;animation:stepIn .3s ease both}
+.step-panel.active{display:block}
+@keyframes stepIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.step-title{margin-bottom:6px;color:var(--text)}
+.step-sub{color:var(--text-lt);font-size:.93rem;margin-bottom:24px}
+
+/* STEP 1 WELCOME */
+.welcome-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.wf-card{background:var(--accent-lt);border-radius:var(--r-sm);padding:13px;text-align:center}
+.wf-card .icon{font-size:1.3rem;margin-bottom:5px}
+.wf-card p{font-size:.78rem;font-weight:600;color:var(--text-md);margin:0}
+.welcome-ctas{display:flex;flex-direction:column;gap:10px}
+
+/* STEP 2 NEEDS */
+.needs-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px}
+.need-card{background:var(--cream);border:2px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s}
+.need-card:hover{border-color:var(--accent);background:var(--accent-lt)}
+.need-card.selected{border-color:var(--primary);background:var(--primary-lt)}
+.need-card .need-icon{font-size:1.3rem;flex-shrink:0;width:30px;text-align:center}
+.need-card .need-text{font-size:.83rem;font-weight:600;color:var(--text-md);line-height:1.3}
+.need-card.selected .need-text{color:var(--primary)}
+
+/* PERSONS SELECTOR in Step 2 */
+.persons-section{background:var(--cream-alt);border-radius:var(--r-sm);padding:16px;margin-bottom:4px;border:1.5px solid var(--border-lt)}
+.persons-section h4{font-size:.85rem;font-weight:700;color:var(--text-md);margin-bottom:12px;font-family:var(--sans)}
+.persons-btns{display:flex;gap:8px;flex-wrap:wrap}
+.person-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);background:var(--white);font-size:.9rem;font-weight:800;color:var(--text-lt);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.person-btn:hover{border-color:var(--accent);color:var(--primary)}
+.person-btn.selected{border-color:var(--primary);background:var(--primary);color:var(--white)}
+.persons-note{font-size:.75rem;color:var(--text-lt);margin-top:8px}
+
+/* STEP 3 TREATMENT — MULTI PERSON */
+.person-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px;-ms-overflow-style:none;scrollbar-width:none}
+.person-tabs::-webkit-scrollbar{display:none}
+.ptab{padding:8px 18px;border-radius:100px;border:1.5px solid var(--border);background:var(--white);font-size:.82rem;font-weight:700;color:var(--text-lt);cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;position:relative}
+.ptab:hover{border-color:var(--accent);color:var(--primary)}
+.ptab.active{background:var(--primary);border-color:var(--primary);color:var(--white)}
+.ptab .ptab-badge{position:absolute;top:-5px;right:-5px;background:var(--accent);color:var(--white);width:16px;height:16px;border-radius:50%;font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.ptab.active .ptab-badge{background:var(--white);color:var(--primary)}
+.treatment-toolbar{display:flex;gap:10px;margin-bottom:12px;align-items:center}
+.search-wrap{flex:1;position:relative}
+.search-wrap input{width:100%;padding:10px 14px 10px 36px;border:1.5px solid var(--border);border-radius:100px;font-size:max(1rem,16px);background:var(--cream);color:var(--text);outline:none;transition:border .2s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-lt);pointer-events:none}
+.cat-filter-wrap{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-ms-overflow-style:none;scrollbar-width:none;margin-bottom:12px}
+.cat-filter-wrap::-webkit-scrollbar{display:none}
+.cat-pill{padding:6px 14px;border-radius:100px;font-size:.77rem;font-weight:700;border:1.5px solid var(--border);color:var(--text-lt);background:var(--white);cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.cat-pill:hover{border-color:var(--accent);color:var(--primary)}
+.cat-pill.active{background:var(--primary);border-color:var(--primary);color:var(--white)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:9px;margin-bottom:16px}
+.svc-item{background:var(--white);border:1.5px solid var(--border-lt);border-radius:var(--r-sm);padding:11px 13px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:all .2s}
+.svc-item:hover{border-color:var(--accent);box-shadow:0 2px 10px var(--shadow)}
+.svc-item.selected{border-color:var(--primary);background:var(--primary-lt)}
+.svc-item.hidden{display:none}
+.svc-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.svc-item.selected .svc-check{background:var(--primary);border-color:var(--primary)}
+.svc-check svg{width:12px;height:12px;stroke:white;display:none}
+.svc-item.selected .svc-check svg{display:block}
+.svc-info{flex:1;min-width:0}
+.svc-name{font-size:.84rem;font-weight:700;color:var(--text);line-height:1.3}
+.svc-dur{font-size:.73rem;color:var(--text-lt);margin-top:1px}
+.svc-item.selected .svc-name{color:var(--primary)}
+.svc-price{font-size:.86rem;font-weight:800;color:var(--primary);white-space:nowrap;flex-shrink:0}
+.no-results{text-align:center;padding:28px;color:var(--text-lt);font-size:.88rem;grid-column:1/-1}
+
+/* PER-PERSON MINI CART */
+.person-cart{background:var(--primary-lt);border-radius:var(--r-sm);border:1.5px solid var(--border);padding:13px;margin-bottom:4px;display:none}
+.person-cart.has-items{display:block}
+.person-cart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.person-cart-header span{font-size:.82rem;font-weight:700;color:var(--primary)}
+.person-cart-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.cart-row{display:flex;align-items:center;gap:7px;font-size:.8rem}
+.cart-row-name{flex:1;color:var(--text-md);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cart-row-price{color:var(--primary);font-weight:700;white-space:nowrap}
+.cart-row-del{width:18px;height:18px;border-radius:50%;background:rgba(181,39,95,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s}
+.cart-row-del:hover{background:var(--primary);color:var(--white)}
+
+/* GRAND TOTAL BAR */
+.grand-total-bar{background:var(--primary);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:0;display:none}
+.grand-total-bar.show{display:block}
+.grand-total-bar .gtb-inner{display:flex;align-items:center;justify-content:space-between}
+.grand-total-bar .gtb-label{color:rgba(255,255,255,.85);font-size:.85rem;font-weight:600}
+.grand-total-bar .gtb-persons{color:rgba(255,255,255,.7);font-size:.76rem;margin-top:2px}
+.grand-total-bar .gtb-total{color:var(--white);font-size:1.15rem;font-weight:800}
+
+/* STEP 4 FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:.82rem;font-weight:700;color:var(--text-md)}
+.form-label .req{color:var(--primary)}
+.form-input{padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:max(1rem,16px);color:var(--text);background:var(--cream);outline:none;transition:border .2s;width:100%}
+.form-input:focus{border-color:var(--primary);background:var(--white)}
+.form-hint{font-size:.73rem;color:var(--text-lt)}
+.form-err{font-size:.73rem;color:#e53935;display:none}
+.form-group.has-error .form-err{display:block}
+.form-group.has-error .form-input{border-color:#e53935}
+.section-divider{border:none;border-top:1.5px solid var(--border-lt);margin:18px 0}
+.section-label{font-size:.74rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border-lt)}
+.radio-group{display:flex;flex-direction:column;gap:8px}
+.radio-opt{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .2s;background:var(--cream)}
+.radio-opt:hover{border-color:var(--accent)}
+.radio-opt.selected{border-color:var(--primary);background:var(--primary-lt)}
+.radio-opt input[type=radio]{width:18px;height:18px;accent-color:var(--primary);flex-shrink:0;margin-top:1px;cursor:pointer}
+.radio-opt-label{font-size:.87rem;font-weight:700;color:var(--text);display:block}
+.radio-opt-desc{font-size:.76rem;color:var(--text-lt)}
+.radio-opt.selected .radio-opt-label{color:var(--primary)}
+.home-fields{display:none}
+.home-fields.show{display:contents}
+
+/* THERAPIST INFO BOX */
+.therapist-info{background:var(--info-lt);border:1.5px solid #BBDEFB;border-radius:var(--r-sm);padding:12px 14px;margin-top:10px;display:none}
+.therapist-info.show{display:block}
+.therapist-info-title{font-size:.8rem;font-weight:700;color:var(--info);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.therapist-chips{display:flex;gap:8px;flex-wrap:wrap}
+.t-chip{display:inline-flex;align-items:center;gap:4px;background:var(--white);border:1px solid #BBDEFB;border-radius:100px;padding:4px 10px;font-size:.76rem;font-weight:600;color:var(--info)}
+.t-chip.available{color:#2E7D32;border-color:#A5D6A7;background:#F1F8E9}
+.t-chip.limited{color:#E65100;border-color:#FFCC80;background:#FFF8E1}
+
+/* CONSENT */
+.consent-wrap{display:flex;align-items:flex-start;gap:10px;padding:13px;background:var(--cream-alt);border-radius:var(--r-sm);border:1.5px solid var(--border-lt)}
+.consent-wrap input[type=checkbox]{width:18px;height:18px;accent-color:var(--primary);flex-shrink:0;margin-top:2px;cursor:pointer}
+.consent-text{font-size:.79rem;color:var(--text-lt);line-height:1.5}
+.consent-text strong{color:var(--text-md)}
+
+/* STEP 5 SUMMARY */
+.summary-meta{background:var(--cream-alt);border-radius:var(--r-sm);padding:18px;margin-bottom:14px;border:1.5px solid var(--border-lt)}
+.summary-row{display:flex;gap:12px;margin-bottom:10px;font-size:.86rem}
+.summary-row:last-child{margin-bottom:0}
+.summary-key{font-weight:700;color:var(--text-md);width:120px;flex-shrink:0;font-size:.8rem}
+.summary-val{color:var(--text);flex:1}
+.summary-persons{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.summary-person-card{background:var(--white);border:1.5px solid var(--border-lt);border-radius:var(--r-sm);overflow:hidden}
+.summary-person-header{background:var(--primary-lt);padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.summary-person-header span{font-size:.84rem;font-weight:700;color:var(--primary)}
+.summary-person-header strong{font-size:.9rem;font-weight:800;color:var(--primary)}
+.summary-person-items{padding:10px 14px}
+.summary-tr-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border-lt);font-size:.83rem}
+.summary-tr-row:last-child{border-bottom:none}
+.summary-total-bar{background:var(--primary);border-radius:var(--r-sm);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.summary-total-bar span{color:rgba(255,255,255,.85);font-size:.88rem;font-weight:600}
+.summary-total-bar strong{color:var(--white);font-size:1.15rem;font-weight:800}
+.summary-note{background:rgba(181,39,95,.06);border-left:3px solid var(--primary);padding:11px 14px;border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:.81rem;color:var(--text-md);margin-bottom:18px;line-height:1.6}
+
+/* STEP 6 SUCCESS */
+.success-wrap{text-align:center;padding:12px 0}
+.success-icon{width:68px;height:68px;background:linear-gradient(135deg,var(--primary-lt),var(--accent-lt));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.9rem}
+.wa-message-preview{background:var(--cream-alt);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:14px;font-size:.8rem;color:var(--text-md);line-height:1.7;white-space:pre-line;margin-bottom:18px;text-align:left;max-height:200px;overflow-y:auto}
+.success-actions{display:flex;flex-direction:column;gap:10px}
+
+/* STEP NAV */
+.step-nav{display:flex;gap:10px;margin-top:20px;align-items:center}
+.btn-back{color:var(--text-lt);font-size:.85rem;padding:10px 14px;flex-shrink:0}
+.btn-back:hover{color:var(--primary)}
+.step-nav-right{flex:1;display:flex;justify-content:flex-end}
+
+/* TRUST */
+.trust-section{padding:44px 0;background:var(--white)}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.trust-item{display:flex;gap:12px;align-items:flex-start}
+.trust-icon{width:38px;height:38px;background:var(--primary-lt);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
+.trust-body h4{font-size:.88rem;font-family:var(--sans);font-weight:700;color:var(--text);margin-bottom:2px}
+.trust-body p{font-size:.78rem;color:var(--text-lt);margin:0}
+
+/* FAQ */
+.faq-section{padding:48px 0;background:var(--cream-alt)}
+.sec-hd{text-align:center;margin-bottom:32px}
+.sec-hd h2{margin-bottom:6px}
+.faq-list{display:flex;flex-direction:column;gap:7px}
+.faq-item{background:var(--white);border-radius:var(--r-sm);border:1.5px solid var(--border-lt);overflow:hidden}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:15px 16px;cursor:pointer;gap:12px;font-weight:700;font-size:.88rem;color:var(--text);transition:color .2s}
+.faq-q:hover,.faq-item.open .faq-q{color:var(--primary)}
+.faq-icon{width:20px;height:20px;background:var(--primary-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s,background .2s}
+.faq-item.open .faq-icon{background:var(--primary);transform:rotate(45deg)}
+.faq-item.open .faq-icon svg{stroke:var(--white)}
+.faq-a{display:none;padding:0 16px 14px;font-size:.85rem;color:var(--text-lt);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* FOOTER — improved aesthetics */
+.footer{background:var(--primary-dk);color:rgba(255,255,255,.8);padding:44px 0 0;font-size:.85rem}
+.footer-inner{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.footer-brand{font-family:var(--serif);font-size:1.25rem;color:var(--white);margin-bottom:10px;font-weight:600;line-height:1.3}
+.footer h4{font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px}
+.footer p{color:rgba(255,255,255,.75);margin-bottom:8px;line-height:1.6}
+.footer a{color:rgba(255,255,255,.8);transition:color .2s;font-weight:500}
+.footer a:hover{color:var(--white)}
+.footer-desc{color:rgba(255,255,255,.65);font-size:.83rem;line-height:1.7;margin-bottom:6px}
+.footer-hours{color:rgba(255,255,255,.5);font-size:.79rem}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:32px;padding:16px 0 calc(28px + env(safe-area-inset-bottom,0px));text-align:center;color:rgba(255,255,255,.35);font-size:.74rem}
+
+/* FLOATING WA */
+.wa-float{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));right:20px;z-index:400;display:flex;align-items:center;gap:8px;flex-direction:row-reverse;opacity:0;transition:opacity .3s}
+.wa-float-btn{width:52px;height:52px;background:var(--wa);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);text-decoration:none;transition:transform .2s;animation:waPulse 3s infinite}
+.wa-float-btn:hover{transform:scale(1.1)}
+.wa-float-label{background:var(--text);color:var(--white);font-size:.76rem;font-weight:700;padding:5px 12px;border-radius:100px;white-space:nowrap}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.5)}50%{box-shadow:0 4px 28px rgba(37,211,102,.8)}}
+
+/* ===== MOBILE max-width:600px ===== */
+@media(max-width:600px){
+  /* Step panels */
+  .step-panel{padding:22px 16px 18px}
+  .progress-bar{padding:14px 16px}
+  .prog-label{display:none}
+
+  /* Grids */
+  .needs-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
+  .hiw-steps{grid-template-columns:repeat(2,1fr)}
+  .welcome-features{grid-template-columns:1fr 1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .summary-key{width:90px}
+
+  /* Booking card full-width — scoped, tidak ganggu section lain */
+  .booking-section{padding:0 0 80px}
+  .booking-card{border-radius:0;box-shadow:none}
+  .booking-section .container{padding:0}
+
+  /* Step nav sticky */
+  .step-nav{position:sticky;bottom:0;background:var(--white);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));margin:0 -16px;border-top:1px solid var(--border-lt);z-index:100;margin-top:16px}
+  .step-nav-right .btn{width:100%;justify-content:center}
+  .step-nav-right{flex:1}
+
+  /* Hero */
+  .hero{padding:calc(36px + env(safe-area-inset-top,0px)) 0 36px;background-position:center 30%}
+
+  /* Hero CTA — stack equal width */
+  .hero-ctas{flex-direction:column;align-items:center;gap:10px;margin-bottom:20px}
+  .hero-ctas .btn{width:100%;max-width:320px;justify-content:center}
+
+  /* Trust pills — stack vertical + styled */
+  .hero-trust{flex-direction:column;align-items:center;gap:6px}
+  .trust-pill{background:rgba(255,255,255,.12);padding:5px 18px;border-radius:100px;border:1px solid rgba(255,255,255,.2);font-size:.8rem}
+
+  /* Trust section */
+  .trust-grid{grid-template-columns:1fr;gap:16px}
+
+  /* Footer mobile — clean, dengan padding */
+  .footer{padding:0}
+  .footer-inner{grid-template-columns:1fr;gap:0}
+  .footer-inner > div{padding:24px 20px}
+  .footer-inner > div:not(:last-child){border-bottom:1px solid rgba(255,255,255,.08)}
+  .footer-brand{font-size:1.3rem;margin-bottom:10px}
+  .footer h4{margin-bottom:12px}
+  .footer p{font-size:.85rem;margin-bottom:10px}
+  .footer-bottom{margin-top:0;padding:14px 20px calc(28px + env(safe-area-inset-bottom,0px))}
+}
+
+@media(max-width:380px){
+  .hero h1{font-size:1.6rem}
+  .hero-sub{font-size:.88rem}
+  .welcome-features{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">RW Beauty Salon &amp; Spa</a>
+    <a href="https://wa.me/6287729537000?text=Halo%20Rumah%20Wangi%2C%20saya%20mau%20tanya%20sebelum%20reservasi." class="nav-wa-btn" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.875-1.418A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+      Tanya Admin
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">&#127800; RW Beauty Salon &amp; Spa</div>
+    <h1>Reservasi Treatment<br>Jadi Lebih Mudah</h1>
+    <p class="hero-sub">Pilih treatment per orang, estimasi biaya otomatis, admin konfirmasi jadwal via WhatsApp.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-lg btn-hero-main" onclick="scrollToBooking()">Mulai Reservasi Sekarang</button>
+      <a href="https://wa.me/6287729537000?text=Halo%20Rumah%20Wangi%2C%20saya%20mau%20tanya%20treatment%20yang%20cocok." class="btn btn-lg btn-hero-ghost" target="_blank" rel="noopener">Tanya Admin Dulu</a>
+    </div>
+    <div class="hero-trust">
+      <span class="trust-pill">&#10003; Pilih treatment per orang</span>
+      <span class="trust-pill">&#10003; Estimasi biaya otomatis</span>
+      <span class="trust-pill">&#10003; Konfirmasi via WhatsApp</span>
+    </div>
+  </div>
+</section>
+
+<section class="hiw">
+  <div class="container">
+    <div class="hiw-title"><h2>Cara Reservasi</h2><p>Empat langkah, selesai dalam menit</p></div>
+    <div class="hiw-steps">
+      <div class="hiw-step"><div class="hiw-step-num">1</div><h4>Pilih Kebutuhan</h4><p>& jumlah orang</p></div>
+      <div class="hiw-step"><div class="hiw-step-num">2</div><h4>Pilih Treatment</h4><p>Per orang, beda treatment</p></div>
+      <div class="hiw-step"><div class="hiw-step-num">3</div><h4>Isi Jadwal</h4><p>Data & waktu reservasi</p></div>
+      <div class="hiw-step"><div class="hiw-step-num">4</div><h4>Konfirmasi WA</h4><p>Admin pastikan slot tersedia</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="booking-section" id="booking">
+  <div class="container">
+    <div class="booking-card">
+
+      <!-- PROGRESS -->
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-steps">
+          <div class="prog-step"><div class="prog-dot active" id="dot-1">1</div><div class="prog-label active" id="lbl-1">Mulai</div></div>
+          <div class="prog-connector" id="con-1"></div>
+          <div class="prog-step"><div class="prog-dot pending" id="dot-2">2</div><div class="prog-label" id="lbl-2">Kebutuhan</div></div>
+          <div class="prog-connector" id="con-2"></div>
+          <div class="prog-step"><div class="prog-dot pending" id="dot-3">3</div><div class="prog-label" id="lbl-3">Treatment</div></div>
+          <div class="prog-connector" id="con-3"></div>
+          <div class="prog-step"><div class="prog-dot pending" id="dot-4">4</div><div class="prog-label" id="lbl-4">Data</div></div>
+          <div class="prog-connector" id="con-4"></div>
+          <div class="prog-step"><div class="prog-dot pending" id="dot-5">5</div><div class="prog-label" id="lbl-5">Kirim</div></div>
+        </div>
+      </div>
+
+      <!-- STEP 1: WELCOME -->
+      <div class="step-panel active" id="step-1">
+        <div style="text-align:center;margin-bottom:22px">
+          <div style="font-size:2.8rem;margin-bottom:8px">&#127800;</div>
+          <h2 class="step-title">Selamat Datang di<br>RW Beauty Salon &amp; Spa</h2>
+        </div>
+        <p class="step-sub" style="text-align:center">Reservasi lebih mudah — pilih treatment per orang, estimasi biaya langsung muncul, admin konfirmasi via WhatsApp.</p>
+        <div class="welcome-features">
+          <div class="wf-card"><div class="icon">&#128101;</div><p>Multi orang, beda treatment</p></div>
+          <div class="wf-card"><div class="icon">&#128176;</div><p>Estimasi biaya otomatis</p></div>
+          <div class="wf-card"><div class="icon">&#128172;</div><p>Konfirmasi via WA</p></div>
+          <div class="wf-card"><div class="icon">&#127968;</div><p>Salon &amp; home service</p></div>
+        </div>
+        <div class="welcome-ctas">
+          <button class="btn btn-primary btn-lg btn-full" onclick="goStep(2)">Mulai Reservasi &#8594;</button>
+          <a href="https://wa.me/6287729537000?text=Halo%20Rumah%20Wangi%2C%20saya%20mau%20tanya%20dulu." class="btn btn-ghost btn-full" target="_blank" rel="noopener">Tanya Admin Dulu via WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- STEP 2: NEED + JUMLAH ORANG -->
+      <div class="step-panel" id="step-2">
+        <h2 class="step-title">Kamu butuh treatment apa?</h2>
+        <p class="step-sub">Pilih kebutuhan — menu treatment akan difilter otomatis.</p>
+        <div class="needs-grid" id="needsGrid"></div>
+        <div class="persons-section">
+          <h4>&#128101; Untuk berapa orang?</h4>
+          <div class="persons-btns" id="personsBtns">
+            <button class="person-btn" onclick="setNumPersons(1,this)">1</button>
+            <button class="person-btn" onclick="setNumPersons(2,this)">2</button>
+            <button class="person-btn" onclick="setNumPersons(3,this)">3</button>
+            <button class="person-btn" onclick="setNumPersons(4,this)">4</button>
+            <button class="person-btn" onclick="setNumPersons(5,this)">5+</button>
+          </div>
+          <p class="persons-note">Setiap orang bisa memilih treatment yang berbeda-beda</p>
+        </div>
+        <div class="step-nav">
+          <button class="btn btn-back" onclick="goStep(1)">&#8592; Kembali</button>
+          <div class="step-nav-right"><button class="btn btn-primary" id="btnStep2Next" onclick="goStep(3)" disabled>Pilih Treatment &#8594;</button></div>
+        </div>
+      </div>
+
+      <!-- STEP 3: TREATMENT PER PERSON -->
+      <div class="step-panel" id="step-3">
+        <h2 class="step-title">Pilih Treatment</h2>
+        <p class="step-sub" id="step3Sub">Pilih treatment untuk setiap orang — klik tab untuk berpindah antar orang.</p>
+        <div class="person-tabs" id="personTabs"></div>
+        <div class="treatment-toolbar">
+          <div class="search-wrap">
+            <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+            <input type="text" id="searchInput" placeholder="Cari treatment..." oninput="filterServices()">
+          </div>
+        </div>
+        <div class="cat-filter-wrap" id="catFilters"></div>
+        <div class="svc-grid" id="svcGrid"></div>
+        <div class="person-cart" id="personCart">
+          <div class="person-cart-header">
+            <span id="personCartLabel">Pilihan Orang 1</span>
+            <span id="personCartTotal" style="font-weight:800;color:var(--primary)">Rp 0</span>
+          </div>
+          <div class="person-cart-list" id="personCartList"></div>
+        </div>
+        <div class="grand-total-bar" id="grandTotalBar">
+          <div class="gtb-inner">
+            <div>
+              <div class="gtb-label">Total Estimasi Semua</div>
+              <div class="gtb-persons" id="grandPersonsBreakdown"></div>
+            </div>
+            <div class="gtb-total" id="grandTotalAmt">Rp 0</div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn btn-back" onclick="goStep(2)">&#8592; Kembali</button>
+          <div class="step-nav-right"><button class="btn btn-primary" id="btnStep3Next" onclick="goStep(4)" disabled>Isi Jadwal &#8594;</button></div>
+        </div>
+      </div>
+
+      <!-- STEP 4: BOOKING DETAILS -->
+      <div class="step-panel" id="step-4">
+        <h2 class="step-title">Isi Data Reservasi</h2>
+        <p class="step-sub">Lengkapi data di bawah agar admin bisa membantu konfirmasi jadwalmu.</p>
+        <form id="bookingForm" novalidate>
+          <div class="section-label">Data Diri</div>
+          <div class="form-grid">
+            <div class="form-group full" id="fg-nama"><label class="form-label">Nama (Pemesan) <span class="req">*</span></label><input class="form-input" id="f-nama" type="text" placeholder="Nama pemesan / penanggung jawab" autocomplete="name"><span class="form-err">Nama wajib diisi</span></div>
+            <div class="form-group" id="fg-wa"><label class="form-label">Nomor WhatsApp Aktif <span class="req">*</span></label><input class="form-input" id="f-wa" type="tel" placeholder="08xxxxxxxxxx" autocomplete="tel"><span class="form-err">Nomor WA wajib diisi</span></div>
+            <div class="form-group" id="fg-gender"><label class="form-label">Jenis Kelamin (Pemesan) <span class="req">*</span></label><select class="form-input" id="f-gender"><option value="">Pilih...</option><option>Perempuan</option><option>Laki-laki</option></select><span class="form-err">Pilih jenis kelamin</span></div>
+          </div>
+          <hr class="section-divider">
+          <div class="section-label">Jadwal</div>
+          <div class="form-grid">
+            <div class="form-group" id="fg-tanggal"><label class="form-label">Tanggal Reservasi <span class="req">*</span></label><input class="form-input" id="f-tanggal" type="date" onchange="updateTherapistInfo()"><span class="form-err">Pilih tanggal</span></div>
+            <div class="form-group" id="fg-jam">
+              <label class="form-label">Jam Reservasi <span class="req">*</span></label>
+              <select class="form-input" id="f-jam" onchange="updateTherapistInfo()">
+                <option value="">Pilih jam...</option>
+                <option>09.00</option><option>09.30</option><option>10.00</option><option>10.30</option>
+                <option>11.00</option><option>11.30</option><option>12.00</option><option>12.30</option>
+                <option>13.00</option><option>13.30</option><option>14.00</option><option>14.30</option>
+                <option>15.00</option><option>15.30</option><option>16.00</option><option>16.30</option>
+                <option>17.00</option><option>17.30</option><option>18.00</option><option>18.30</option>
+                <option>19.00</option><option>19.30</option><option>20.00</option><option>20.30</option>
+                <option>21.00</option>
+              </select>
+              <span class="form-err">Pilih jam</span>
+              <div class="therapist-info" id="therapistInfo">
+                <div class="therapist-info-title">&#128105;&#8205;&#9877;&#65039; Ketersediaan Terapis</div>
+                <div class="therapist-chips" id="therapistChips"></div>
+              </div>
+            </div>
+          </div>
+          <hr class="section-divider">
+          <div class="section-label">Lokasi</div>
+          <div class="form-group full" id="fg-visit" style="margin-bottom:14px">
+            <label class="form-label">Treatment di mana? <span class="req">*</span></label>
+            <div class="radio-group">
+              <label class="radio-opt" onclick="selectVisit(this,'salon')"><input type="radio" name="visitType" value="Datang ke Salon"><div><span class="radio-opt-label">&#127968; Datang ke Rumah Wangi</span><span class="radio-opt-desc">Saya akan langsung datang ke salon</span></div></label>
+              <label class="radio-opt" onclick="selectVisit(this,'home')"><input type="radio" name="visitType" value="Home Service"><div><span class="radio-opt-label">&#128664; Home Service</span><span class="radio-opt-desc">Terapis datang ke lokasi saya (konfirmasi ketersediaan dengan admin)</span></div></label>
+              <label class="radio-opt" onclick="selectVisit(this,'tanya')"><input type="radio" name="visitType" value="Tanya Admin"><div><span class="radio-opt-label">&#128172; Masih ingin tanya admin dulu</span><span class="radio-opt-desc">Admin akan menjelaskan opsi yang tersedia</span></div></label>
+            </div>
+            <span class="form-err" id="visit-err" style="display:none">Pilih salah satu opsi</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-group" id="fg-kecamatan"><label class="form-label">Kecamatan <span class="req">*</span></label><input class="form-input" id="f-kecamatan" type="text" placeholder="Kecamatan domisili"><span class="form-err">Wajib diisi</span></div>
+            <div class="form-group" id="fg-kota"><label class="form-label">Kota / Kabupaten <span class="req">*</span></label><input class="form-input" id="f-kota" type="text" placeholder="Kota / Kabupaten"><span class="form-err">Wajib diisi</span></div>
+            <div class="home-fields" id="homeFields">
+              <div class="form-group full" id="fg-alamat"><label class="form-label">Alamat Lengkap <span class="req">*</span></label><textarea class="form-input" id="f-alamat" rows="2" placeholder="Jalan, nomor, RT/RW, kelurahan..."></textarea><span class="form-err">Alamat wajib diisi untuk home service</span></div>
+              <div class="form-group" id="fg-kelurahan"><label class="form-label">Kelurahan <span class="req">*</span></label><input class="form-input" id="f-kelurahan" type="text" placeholder="Kelurahan"><span class="form-err">Wajib diisi</span></div>
+            </div>
+          </div>
+          <hr class="section-divider">
+          <div class="section-label">Catatan</div>
+          <div class="form-grid">
+            <div class="form-group full"><label class="form-label">Pesan atau Permintaan Khusus</label><textarea class="form-input" id="f-catatan" rows="3" placeholder="Contoh: preferensi terapis, kondisi kesehatan, alergi, dll."></textarea><span class="form-hint">Opsional — membantu terapis mempersiapkan treatment terbaik</span></div>
+          </div>
+          <hr class="section-divider">
+          <div class="consent-wrap"><input type="checkbox" id="f-consent"><label class="consent-text" for="f-consent">Saya menyetujui data ini digunakan oleh <strong>RW Beauty Salon &amp; Spa</strong> untuk keperluan reservasi dan follow-up. Data tidak akan disebarkan kepada pihak ketiga.</label></div>
+          <span class="form-err" id="consent-err" style="display:none;margin-top:6px">Centang persetujuan untuk melanjutkan</span>
+        </form>
+        <div class="step-nav">
+          <button class="btn btn-back" onclick="goStep(3)">&#8592; Kembali</button>
+          <div class="step-nav-right"><button class="btn btn-primary" onclick="validateAndGoSummary()">Lihat Ringkasan &#8594;</button></div>
+        </div>
+      </div>
+
+      <!-- STEP 5: SUMMARY -->
+      <div class="step-panel" id="step-5">
+        <h2 class="step-title">Ringkasan Reservasi</h2>
+        <p class="step-sub">Periksa kembali sebelum dikirim ke admin.</p>
+        <div class="summary-meta" id="summaryMeta"></div>
+        <div class="summary-persons" id="summaryPersons"></div>
+        <div class="summary-total-bar" id="summaryTotal"></div>
+        <div class="summary-note">&#9888;&#65039; <strong>Reservasi belum otomatis terkonfirmasi.</strong> Admin Rumah Wangi akan menghubungi kamu melalui WhatsApp untuk memastikan jadwal, ketersediaan slot, dan detail treatment.</div>
+        <div class="step-nav">
+          <button class="btn btn-back" onclick="goStep(4)">&#8592; Edit Data</button>
+          <div class="step-nav-right"><button class="btn btn-primary btn-lg" onclick="submitBooking()">Kirim Reservasi &#8594;</button></div>
+        </div>
+      </div>
+
+      <!-- STEP 6: SUCCESS -->
+      <div class="step-panel" id="step-6">
+        <div class="success-wrap">
+          <div class="success-icon">&#127800;</div>
+          <h2>Reservasi Terkirim!</h2>
+          <p class="step-sub">Data sudah kami terima. Admin akan segera menghubungi via WhatsApp untuk konfirmasi jadwal.</p>
+          <p style="font-size:.83rem;font-weight:700;color:var(--text-md);margin-bottom:8px;text-align:left">Pesan yang akan dikirim ke WhatsApp admin:</p>
+          <div class="wa-message-preview" id="waPreview"></div>
+          <div class="success-actions">
+            <a class="btn btn-wa btn-lg btn-full" id="waFinalBtn" href="#" target="_blank" rel="noopener">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.875-1.418A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+              Kirim ke WhatsApp Admin
+            </a>
+            <button class="btn btn-ghost btn-full" onclick="resetForm()">Buat Reservasi Baru</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /booking-card -->
+  </div>
+</section>
+
+<section class="trust-section">
+  <div class="container-wide">
+    <div class="sec-hd" style="margin-bottom:24px"><h2>Kenapa Reservasi Lewat Sini?</h2></div>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="trust-icon">&#128101;</div><div class="trust-body"><h4>Multi Orang, Beda Treatment</h4><p>Setiap orang bisa pilih treatment berbeda dalam satu booking</p></div></div>
+      <div class="trust-item"><div class="trust-icon">&#128176;</div><div class="trust-body"><h4>Estimasi Biaya Otomatis</h4><p>Total per orang dan keseluruhan dihitung langsung saat memilih</p></div></div>
+      <div class="trust-item"><div class="trust-icon">&#128172;</div><div class="trust-body"><h4>Admin Konfirmasi via WA</h4><p>Jadwal, slot, dan harga final dikonfirmasi oleh admin</p></div></div>
+      <div class="trust-item"><div class="trust-icon">&#128105;&#8205;&#9877;&#65039;</div><div class="trust-body"><h4>Terapis Terlatih</h4><p>Shift pagi, siang, dan middle — termasuk terapis pria</p></div></div>
+      <div class="trust-item"><div class="trust-icon">&#9200;&#65039;</div><div class="trust-body"><h4>Jam Buka 09.00–21.00</h4><p>Booking minimal 2 jam sebelum jadwal treatment</p></div></div>
+      <div class="trust-item"><div class="trust-icon">&#128274;</div><div class="trust-body"><h4>Data Aman</h4><p>Hanya digunakan untuk keperluan reservasi dan follow-up</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="container">
+    <div class="sec-hd"><h2>Pertanyaan yang Sering Ditanyakan</h2><p>Tidak menemukan jawaban? Chat admin via WhatsApp</p></div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">RW Beauty Salon &amp; Spa</div>
+        <p class="footer-desc">Perawatan lengkap untuk tubuh, rambut, wajah, tangan, dan kaki.</p>
+        <p class="footer-hours">&#8987; Jam buka: 09.00 – 21.00</p>
+      </div>
+      <div>
+        <h4>Kontak &amp; Info</h4>
+        <p>&#128172; <a href="https://wa.me/6287729537000" target="_blank" rel="noopener">WhatsApp Admin</a></p>
+        <p>&#128247; <a href="https://instagram.com/rumahwangi_cm" target="_blank" rel="noopener">@rumahwangi_cm</a></p>
+        <p>&#128205; <a href="https://maps.google.com" target="_blank" rel="noopener">Lihat di Google Maps</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 RW Beauty Salon &amp; Spa by Isma. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="wa-float" id="waFloat">
+  <a class="wa-float-btn" href="https://wa.me/6287729537000?text=Halo%20Rumah%20Wangi%2C%20saya%20mau%20tanya%20treatment." target="_blank" rel="noopener" aria-label="Chat WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.875-1.418A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+  </a>
+  <span class="wa-float-label">Chat Admin</span>
+</div>
+
+<script>
+const CONFIG={waNumber:'6287729537000',googleScriptURL:'https://script.google.com/macros/s/AKfycbzczlfUHOVwLyDalaM3xC08CVjIW9axv9-vz70zsDgeGsY_-vDT25viszepg46Pn3MZoQ/exec'};
+
+function getTherapistInfo(jamStr){
+  if(!jamStr)return null;
+  const h=parseInt(jamStr.split('.')[0]);
+  let total=0,male=0;
+  if(h>=9&&h<17){total+=4;male+=2;}
+  if(h>=11&&h<19){total+=2;}
+  if(h>=13&&h<=21){total+=6;male+=2;}
+  return{total,male,female:total-male};
+}
+
+const CATEGORIES={
+salon:{name:'Salon',icon:'&#9986;',items:[
+{id:'s1',name:'Haircut',price:50000,dur:''},{id:'s2',name:'Creambath Natural',price:80000,dur:''},{id:'s3',name:'Hair Spa',price:100000,dur:''},{id:'s4',name:'Hair Mask',price:100000,dur:''},{id:'s5',name:'Scalp Treatment',price:125000,dur:''},{id:'s6',name:'Hairfall Treatment',price:85000,dur:''},{id:'s7',name:'Hairwash',price:40000,dur:''},{id:'s8',name:'Blow / Catok',price:30000,dur:''},{id:'s9',name:'Hair Wash + Blow/Catok',price:65000,dur:''},{id:'s10',name:'Curly',price:50000,dur:''},{id:'s11',name:'Manicure',price:90000,dur:''},{id:'s12',name:'Pedicure',price:95000,dur:''},{id:'s13',name:'Manicure & Pedicure',price:160000,dur:''},{id:'s14',name:'Additional Scalp 1',price:25000,dur:''},{id:'s15',name:'Additional Scalp 2',price:45000,dur:''},{id:'s16',name:'Additional Hairfall',price:35000,dur:''}]},
+beauty:{name:'Beauty',icon:'&#10024;',items:[
+{id:'b1',name:'Anti Aging Facial',price:165000,dur:'60 Menit'},{id:'b2',name:'Totok Wajah',price:70000,dur:'30 Menit'},{id:'b3',name:'Totok Wajah Accu Derma',price:85000,dur:'45 Menit'},{id:'b4',name:'Shooting Eye Mask',price:50000,dur:'15 Menit'},{id:'b5',name:'Dermapen Flek',price:200000,dur:''},{id:'b6',name:'Oxy Dry Facial',price:285000,dur:'60 Menit'},{id:'b7',name:'Oily Facial Control',price:300000,dur:'60 Menit'},{id:'b8',name:'Acne Facial Control',price:300000,dur:'60 Menit'},{id:'b9',name:'Dark Spot Facial Control',price:285000,dur:'60 Menit'},{id:'b10',name:'Skin Tightening Facial',price:295000,dur:'60 Menit'}]},
+body:{name:'Body Treatment',icon:'&#127807;',items:[
+{id:'bt1',name:'Body Scrub',price:80000,dur:'45 Menit'},{id:'bt2',name:'Body Mask',price:80000,dur:'45 Menit'},{id:'bt3',name:'Body Bath',price:85000,dur:'45 Menit'},{id:'bt4',name:'Back Massage',price:75000,dur:'30 Menit'},{id:'bt5',name:'Relaxing Reflexology',price:85000,dur:'60 Menit'},{id:'bt6',name:'Relaxing Reflexology',price:100000,dur:'90 Menit'},{id:'bt7',name:'Totok Vagina',price:65000,dur:'20 Menit'},{id:'bt8',name:'Totok Payudara',price:65000,dur:'20 Menit'},{id:'bt9',name:'Ratus Miss V',price:70000,dur:'30 Menit'},{id:'bt10',name:'Breast Care',price:150000,dur:'45 Menit'},{id:'bt11',name:'Sauna (1 Orang)',price:100000,dur:'15 Menit'},{id:'bt12',name:'Sauna (2 Orang)',price:150000,dur:'15 Menit'},{id:'bt13',name:'Sauna (3 Orang)',price:200000,dur:'15 Menit'},{id:'bt14',name:'Sauna (4 Orang)',price:220000,dur:'15 Menit'},{id:'bt15',name:'Galva Body Spa - Back',price:75000,dur:''},{id:'bt16',name:'Galva Body Spa - Stomach',price:75000,dur:''},{id:'bt17',name:'Galva Body Spa - Hand',price:100000,dur:''},{id:'bt18',name:'Galva Body Spa - Leg',price:150000,dur:''},{id:'bt19',name:'Galva Body Spa Package + Free Sauna',price:400000,dur:''}]},
+massage:{name:'Body Massage',icon:'&#128134;',items:[
+{id:'m1',name:'Javanese Massage',price:125000,dur:'60 Menit'},{id:'m2',name:'Javanese Massage',price:160000,dur:'90 Menit'},{id:'m3',name:'Balinese Massage',price:135000,dur:'60 Menit'},{id:'m4',name:'Balinese Massage',price:170000,dur:'90 Menit'},{id:'m5',name:'Aromatherapy Massage',price:135000,dur:'60 Menit'},{id:'m6',name:'Aromatherapy Massage',price:170000,dur:'90 Menit'},{id:'m7',name:"Mom's To Be Massage",price:135000,dur:'60 Menit'},{id:'m8',name:"Mom's To Be Massage",price:170000,dur:'90 Menit'}]},
+lymphatic:{name:'Lymphatic Drainage',icon:'&#129671;',items:[
+{id:'l1',name:'Lymphatic Face Therapy',price:200000,dur:'30 Menit'},{id:'l2',name:'Lymphatic Face Therapy',price:235000,dur:'45 Menit'},{id:'l3',name:'Package V-Contour Face 3x',price:600000,dur:''},{id:'l4',name:'Package V-Contour Face Intensive 5x',price:1000000,dur:''},{id:'l5',name:'Lymphatic Full Body',price:450000,dur:'90 Menit'},{id:'l6',name:'Lymphatic Full Body',price:600000,dur:'120 Menit'},{id:'l7',name:'Package Opening Flow 3x (90 Min)',price:1350000,dur:''},{id:'l8',name:'Package Opening Flow 3x (120 Min)',price:1800000,dur:''},{id:'l9',name:'Package Deep Cleansing 5x (90 Min)',price:2250000,dur:''},{id:'l10',name:'Package Deep Cleansing 5x (120 Min)',price:3000000,dur:''},{id:'l11',name:'Package Body Reset 7x (90 Min)',price:3150000,dur:''},{id:'l12',name:'Package Body Reset 7x (120 Min)',price:4200000,dur:''},{id:'l13',name:'Lymphatic + Maderotherapy',price:150000,dur:'30 Menit'},{id:'l14',name:'Lymphatic + Microcurrent - Back',price:100000,dur:''},{id:'l15',name:'Lymphatic + Microcurrent - Stomach',price:100000,dur:''},{id:'l16',name:'Lymphatic + Microcurrent - Hand',price:100000,dur:''},{id:'l17',name:'Lymphatic + Microcurrent - Leg',price:150000,dur:''},{id:'l18',name:'Lymphatic + Microcurrent Full Body',price:400000,dur:''}]},
+waxing:{name:'Waxing',icon:'&#127800;',items:[
+{id:'w1',name:'Waxing Cheek',price:125000,dur:''},{id:'w2',name:'Waxing Eyebrow',price:100000,dur:''},{id:'w3',name:'Waxing Under Arm',price:100000,dur:''},{id:'w4',name:'Waxing Half Hand',price:95000,dur:''},{id:'w5',name:'Waxing Full Hand',price:145000,dur:''},{id:'w6',name:'Waxing Half Leg',price:100000,dur:''},{id:'w7',name:'Waxing Full Leg',price:150000,dur:''},{id:'w8',name:'Waxing Bikini',price:150000,dur:''},{id:'w9',name:'Waxing Brazilian',price:175000,dur:''}]},
+nail:{name:'Nail & Lash',icon:'&#128133;',items:[
+{id:'n1',name:'Nail Polish Standard',price:90000,dur:''},{id:'n2',name:'Nail Polish Kids',price:50000,dur:''},{id:'n3',name:'Nail Art Standard',price:125000,dur:''},{id:'n4',name:'Nail Art Party (Halal)',price:150000,dur:''},{id:'n5',name:'Nail Art Kids',price:100000,dur:''},{id:'n6',name:'Kuku Palsu',price:5000,dur:'per kuku'},{id:'n7',name:'Accessories Kuku',price:3000,dur:'per kuku'},{id:'n8',name:'Remove Nail/Gel/Kuku Palsu',price:5000,dur:'per kuku'},{id:'n9',name:'Lash Lift',price:125000,dur:'60 Menit'},{id:'n10',name:'Eyelash Extension Standard Single',price:175000,dur:''},{id:'n11',name:'Eyelash Extension Standard Double',price:225000,dur:''},{id:'n12',name:'Eyelash Extension Standard Russian',price:200000,dur:''},{id:'n13',name:'Eyelash Extension Standard Cat Eyes',price:200000,dur:''},{id:'n14',name:'Eyelash Extension Premium Single',price:275000,dur:''},{id:'n15',name:'Eyelash Extension Premium Double',price:325000,dur:''},{id:'n16',name:'Eyelash Extension Premium Russian',price:300000,dur:''},{id:'n17',name:'Eyelash Extension Premium Cat Eyes',price:300000,dur:''},{id:'n18',name:'Retouch Full',price:125000,dur:''},{id:'n19',name:'Remove Eyelash',price:50000,dur:''}]},
+spa:{name:'Spa Package',icon:'&#128705;',items:[
+{id:'sp1',name:'Cleansing Body Treatment',price:180000,dur:''},{id:'sp2',name:'Detoxifying Ratus Treatment',price:245000,dur:''},{id:'sp3',name:'Detoxifying Sauna Treatment',price:255000,dur:''},{id:'sp4',name:'Refreshing Body Treatment',price:250000,dur:''},{id:'sp5',name:'Nourishing Body Treatment',price:255000,dur:''},{id:'sp6',name:'Relaxing Body Treatment',price:275000,dur:''}]},
+baby:{name:'Baby Spa',icon:'&#128118;',items:[
+{id:'ba1',name:'Baby Massage',price:100000,dur:'30 Menit'},{id:'ba2',name:'Kids Massage',price:100000,dur:'30 Menit'},{id:'ba3',name:'Baby Swim / Baby Bath',price:100000,dur:'20 Menit'},{id:'ba4',name:'Baby Bath Bubble',price:125000,dur:'30 Menit'},{id:'ba5',name:'Baby Brain Gym',price:50000,dur:'15 Menit'},{id:'ba6',name:'Lulur Bayi',price:65000,dur:'30 Menit'},{id:'ba7',name:'Masker Bayi',price:45000,dur:'10 Menit'},{id:'ba8',name:'Hair Wash Kids',price:35000,dur:'30 Menit'},{id:'ba9',name:'Creambath Kids',price:50000,dur:'30 Menit'},{id:'ba10',name:'Package Baby Massage + Lulur',price:150000,dur:'60 Menit'},{id:'ba11',name:'Package Baby Massage + Masker',price:135000,dur:'60 Menit'},{id:'ba12',name:'Package Baby Massage + Masker + Lulur',price:220000,dur:'60 Menit'},{id:'ba13',name:'Package Baby Massage + Swim',price:175000,dur:'60 Menit'},{id:'ba14',name:'Package Baby Massage + Bath',price:175000,dur:'60 Menit'},{id:'ba15',name:'Package Baby Massage + Brain Gym',price:135000,dur:'45 Menit'},{id:'ba16',name:'Package Baby Massage + Pijat Nafsu Makan',price:150000,dur:''},{id:'ba17',name:'Package Baby Massage + Pijat Cold & Flu',price:150000,dur:''},{id:'ba18',name:'Baby/Kids Massage Package 6x',price:500000,dur:''},{id:'ba19',name:'Swim/Bath Package 6x',price:500000,dur:''},{id:'ba20',name:'Baby Bath Bubble Package 6x',price:625000,dur:''},{id:'ba21',name:'Pijat Konstipasi',price:100000,dur:'30 Menit'},{id:'ba22',name:'Pijat Kholik',price:100000,dur:'30 Menit'},{id:'ba23',name:'Pijat Diare',price:100000,dur:'30 Menit'},{id:'ba24',name:'Pijat Nafsu Makan',price:100000,dur:'30 Menit'},{id:'ba25',name:'Pijat Cold & Flu',price:100000,dur:'30 Menit'}]},
+mom:{name:'Mom & Kids',icon:'&#128145;',items:[
+{id:'mk1',name:'Pijat Nifas + Totok Wajah + Baby Massage',price:250000,dur:'120 Menit'},{id:'mk2',name:'Pijat Nifas + Laktasi + Totok Wajah + Baby Massage',price:330000,dur:'165 Menit'},{id:'mk3',name:'Pijat Nifas',price:120000,dur:'60 Menit'},{id:'mk4',name:'Totok Wajah (Mom & Kids)',price:75000,dur:'30 Menit'},{id:'mk5',name:'Pijat Laktasi & Oksitosin',price:85000,dur:'45 Menit'},{id:'mk6',name:'Pijat Nifas + Laktasi + Totok Wajah',price:250000,dur:'120 Menit'},{id:'mk7',name:'Pijat Laktasi + Totok Wajah',price:150000,dur:'120 Menit'},{id:'mk8',name:'Pijat Nifas + Totok Wajah',price:155000,dur:'75 Menit'}]},
+prewedding:{name:'Prewedding',icon:'&#128141;',items:[
+{id:'pw1',name:'Prewedding Treatment - Female',price:625000,dur:'315 Menit'},{id:'pw2',name:'Prewedding Treatment - Male',price:450000,dur:'210 Menit'}]},
+gentlemen:{name:'Gentlemen',icon:'&#128084;',items:[
+{id:'g1',name:'Javanese Massage',price:125000,dur:'60 Menit'},{id:'g2',name:'Javanese Massage',price:160000,dur:'90 Menit'},{id:'g3',name:'Aromatherapy Massage',price:135000,dur:'60 Menit'},{id:'g4',name:'Aromatherapy Massage',price:170000,dur:'90 Menit'},{id:'g5',name:'Relaxing Reflexology',price:85000,dur:'60 Menit'},{id:'g6',name:'Relaxing Reflexology',price:100000,dur:'90 Menit'},{id:'g7',name:'Back Massage',price:75000,dur:'30 Menit'},{id:'g8',name:'Body Scrub',price:80000,dur:'45 Menit'},{id:'g9',name:'Body Mask',price:80000,dur:'45 Menit'},{id:'g10',name:'Creambath Natural',price:80000,dur:'60 Menit'},{id:'g11',name:'Hair Spa',price:100000,dur:'60 Menit'},{id:'g12',name:'Hair Mask',price:100000,dur:'60 Menit'},{id:'g13',name:'Scalp Treatment',price:125000,dur:'60 Menit'},{id:'g14',name:'Hairfall Treatment',price:85000,dur:'60 Menit'},{id:'g15',name:'Anti Aging Facial',price:165000,dur:'60 Menit'},{id:'g16',name:'Totok Wajah',price:70000,dur:'60 Menit'},{id:'g17',name:'Totok Wajah Accu Derma',price:85000,dur:'60 Menit'},{id:'g18',name:'Shooting Eye Mask',price:50000,dur:'60 Menit'},{id:'g19',name:'Cleansing Body Spa Package',price:180000,dur:'90 Menit'},{id:'g20',name:'Refreshing Body Spa Package',price:250000,dur:'120 Menit'},{id:'g21',name:'Nourishing Body Spa Package',price:255000,dur:'120 Menit'}]}
+};
+
+const NEEDS=[
+{id:'pegal',label:'Badan pegal & butuh relaksasi',icon:'&#128134;',cats:['massage','body','spa']},
+{id:'rambut',label:'Ingin perawatan rambut',icon:'&#128135;',cats:['salon']},
+{id:'wajah',label:'Ingin facial / perawatan wajah',icon:'&#127800;',cats:['beauty','lymphatic']},
+{id:'body_spa',label:'Ingin body treatment atau spa',icon:'&#128705;',cats:['body','spa']},
+{id:'lymphatic',label:'Ingin lymphatic treatment',icon:'&#129671;',cats:['lymphatic']},
+{id:'waxing',label:'Ingin waxing',icon:'&#10024;',cats:['waxing']},
+{id:'nail',label:'Ingin nail atau lash treatment',icon:'&#128133;',cats:['nail']},
+{id:'baby',label:'Ingin baby spa',icon:'&#128118;',cats:['baby']},
+{id:'mom',label:'Ingin mom & kids treatment',icon:'&#128145;',cats:['mom']},
+{id:'prewedding',label:'Ingin prewedding treatment',icon:'&#128141;',cats:['prewedding']},
+{id:'pria',label:'Ingin treatment untuk pria',icon:'&#128084;',cats:['gentlemen']},
+{id:'bingung',label:'Masih bingung, butuh rekomendasi admin',icon:'&#128172;',cats:Object.keys(CATEGORIES)},
+];
+
+const FAQ_DATA=[
+{q:'Apakah bisa booking untuk beberapa orang sekaligus?',a:'Ya! Kamu bisa booking untuk 1-5+ orang sekaligus. Setiap orang bisa memilih treatment yang berbeda-beda, dan estimasi biaya akan dihitung secara terpisah per orang maupun totalnya.'},
+{q:'Apakah harus booking dulu?',a:'Sangat disarankan booking terlebih dahulu, minimal 2 jam sebelum treatment. Ini membantu kami menyiapkan terapis dan ruangan terbaik.'},
+{q:'Berapa jam operasional Rumah Wangi?',a:'Kami buka setiap hari pukul 09.00 hingga 21.00. Booking minimal 2 jam sebelum treatment yang diinginkan.'},
+{q:'Apakah tersedia terapis pria?',a:'Ya! Kami memiliki 2 terapis pria di shift pagi (09.00-17.00) dan 2 terapis pria di shift siang (13.00-21.00). Saat memilih jam, ketersediaan terapis akan ditampilkan otomatis.'},
+{q:'Apakah harga sudah pasti?',a:'Harga yang ditampilkan adalah estimasi. Admin akan mengkonfirmasi harga final via WhatsApp sebelum treatment dilakukan.'},
+{q:'Apakah reservasi langsung terkonfirmasi?',a:'Tidak langsung. Setelah submit, admin akan menghubungi via WhatsApp untuk konfirmasi jadwal dan ketersediaan slot.'},
+{q:'Apakah tersedia home service?',a:'Tersedia untuk area tertentu. Konfirmasi ketersediaan dengan admin via WhatsApp.'},
+{q:'Apakah data saya aman?',a:'Data hanya digunakan untuk keperluan reservasi dan follow-up. Tidak disebarkan kepada pihak ketiga.'},
+];
+
+let currentStep=1,selectedNeed=null,activeCats=[],numPersons=0,persons=[],activePersonIdx=0,activeCatFilter='all',visitType='';
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderNeeds();renderFAQ();setMinDate();
+  window.addEventListener('scroll',()=>{document.getElementById('waFloat').style.opacity=window.scrollY>100?'1':'0';},{passive:true});
+});
+function setMinDate(){const d=new Date();document.getElementById('f-tanggal').min=d.toISOString().split('T')[0];}
+function scrollToBooking(){document.getElementById('booking').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>goStep(1),400);}
+function rp(n){return 'Rp '+n.toLocaleString('id-ID');}
+function enc(s){return encodeURIComponent(s);}
+function v(id){return(document.getElementById(id)||{}).value||'';}
+
+function goStep(n){
+  document.getElementById('step-'+currentStep).classList.remove('active');
+  currentStep=n;
+  document.getElementById('step-'+currentStep).classList.add('active');
+  updateProgress();
+  document.getElementById('booking').scrollIntoView({behavior:'smooth',block:'start'});
+  if(n===3)initStep3();
+  if(n===5)buildSummary();
+  if(n===6)buildSuccess();
+}
+function updateProgress(){
+  for(let i=1;i<=5;i++){
+    const dot=document.getElementById('dot-'+i);const lbl=document.getElementById('lbl-'+i);const con=document.getElementById('con-'+i);
+    if(!dot)continue;
+    dot.className='prog-dot '+(i<currentStep?'done':i===currentStep?'active':'pending');
+    dot.innerHTML=i<currentStep?'&#10003;':i;
+    if(lbl)lbl.className='prog-label'+(i<=currentStep?' active':'');
+    if(con)con.className='prog-connector'+(i<currentStep?' done':'');
+  }
+  document.getElementById('progressBar').style.display=currentStep===6?'none':'block';
+}
+
+function renderNeeds(){
+  document.getElementById('needsGrid').innerHTML=NEEDS.map(n=>`<div class="need-card" id="need-${n.id}" onclick="selectNeed('${n.id}')"><span class="need-icon">${n.icon}</span><span class="need-text">${n.label}</span></div>`).join('');
+}
+function selectNeed(id){
+  document.querySelectorAll('.need-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('need-'+id).classList.add('selected');
+  selectedNeed=id;activeCats=NEEDS.find(n=>n.id===id).cats;
+  checkStep2Ready();
+}
+function setNumPersons(n,btn){
+  numPersons=n;
+  document.querySelectorAll('.person-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  persons=Array.from({length:n},()=>({cart:{}}));
+  checkStep2Ready();
+}
+function checkStep2Ready(){
+  document.getElementById('btnStep2Next').disabled=!(selectedNeed&&numPersons>0);
+}
+
+function initStep3(){
+  activePersonIdx=0;activeCatFilter='all';
+  document.getElementById('searchInput').value='';
+  renderPersonTabs();renderCatFilters();renderServices();
+}
+function renderPersonTabs(){
+  const tabs=document.getElementById('personTabs');
+  tabs.innerHTML=persons.map((p,i)=>{
+    const count=Object.keys(p.cart).length;
+    return `<button class="ptab${i===activePersonIdx?' active':''}" onclick="switchPerson(${i})">Orang ${i+1}${count>0?'<span class="ptab-badge">'+count+'</span>':''}</button>`;
+  }).join('');
+}
+function switchPerson(idx){
+  activePersonIdx=idx;activeCatFilter='all';
+  document.getElementById('searchInput').value='';
+  renderPersonTabs();renderCatFilters();renderServices();
+  updatePersonCart();
+}
+function renderCatFilters(){
+  const rel=activeCats.filter(k=>CATEGORIES[k]);
+  document.getElementById('catFilters').innerHTML='<button class="cat-pill active" onclick="setCatFilter(\'all\',this)">Semua</button>'+rel.map(k=>`<button class="cat-pill" onclick="setCatFilter('${k}',this)">${CATEGORIES[k].icon} ${CATEGORIES[k].name}</button>`).join('');
+}
+function renderServices(){
+  const rel=activeCats.filter(k=>CATEGORIES[k]);
+  const currentCart=persons[activePersonIdx].cart;
+  let html='';
+  rel.forEach(catKey=>{
+    CATEGORIES[catKey].items.forEach(item=>{
+      const sel=currentCart[item.id]?'selected':'';
+      html+=`<div class="svc-item ${sel}" id="svc-${item.id}" data-cat="${catKey}" onclick="toggleItem('${item.id}')"><div class="svc-check"><svg viewBox="0 0 12 9" fill="none" stroke="white" stroke-width="2.5"><polyline points="1 4 4 7 11 1"/></svg></div><div class="svc-info"><div class="svc-name">${item.name}</div>${item.dur?'<div class="svc-dur">'+item.dur+'</div>':''}</div><div class="svc-price">${rp(item.price)}</div></div>`;
+    });
+  });
+  document.getElementById('svcGrid').innerHTML=html||'<div class="no-results">Tidak ada treatment tersedia</div>';
+  filterServices();
+}
+function setCatFilter(cat,btn){
+  activeCatFilter=cat;
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');filterServices();
+}
+function filterServices(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  let any=false;
+  document.querySelectorAll('.svc-item').forEach(el=>{
+    const name=el.querySelector('.svc-name').textContent.toLowerCase();
+    const cat=el.dataset.cat;
+    const ok=(!q||name.includes(q))&&(activeCatFilter==='all'||cat===activeCatFilter);
+    el.classList.toggle('hidden',!ok);if(ok)any=true;
+  });
+  const grid=document.getElementById('svcGrid');const ex=grid.querySelector('.no-results');
+  if(!any&&!ex)grid.insertAdjacentHTML('beforeend','<div class="no-results">Treatment tidak ditemukan. Coba kata kunci lain.</div>');
+  else if(any&&ex)ex.remove();
+}
+function toggleItem(id){
+  const item=Object.values(CATEGORIES).flatMap(c=>c.items).find(i=>i.id===id);
+  if(!item)return;
+  const cart=persons[activePersonIdx].cart;
+  if(cart[id]){delete cart[id];document.getElementById('svc-'+id)?.classList.remove('selected');}
+  else{cart[id]={name:item.name,price:item.price,dur:item.dur};document.getElementById('svc-'+id)?.classList.add('selected');}
+  updatePersonCart();renderPersonTabs();updateGrandTotal();
+}
+function updatePersonCart(){
+  const cart=persons[activePersonIdx].cart;const ids=Object.keys(cart);
+  const panel=document.getElementById('personCart');
+  document.getElementById('personCartLabel').textContent='Pilihan Orang '+(activePersonIdx+1);
+  if(!ids.length){panel.classList.remove('has-items');return;}
+  panel.classList.add('has-items');
+  const sub=ids.reduce((s,id)=>s+cart[id].price,0);
+  document.getElementById('personCartTotal').textContent=rp(sub);
+  document.getElementById('personCartList').innerHTML=ids.map(id=>`<div class="cart-row"><span class="cart-row-name">${cart[id].name}${cart[id].dur?' ('+cart[id].dur+')':''}</span><span class="cart-row-price">${rp(cart[id].price)}</span><span class="cart-row-del" onclick="removeItem('${id}')"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l10 10M11 1L1 11"/></svg></span></div>`).join('');
+}
+function removeItem(id){delete persons[activePersonIdx].cart[id];document.getElementById('svc-'+id)?.classList.remove('selected');updatePersonCart();renderPersonTabs();updateGrandTotal();}
+function updateGrandTotal(){
+  const grand=persons.reduce((s,p)=>s+Object.values(p.cart).reduce((ps,i)=>ps+i.price,0),0);
+  const bar=document.getElementById('grandTotalBar');
+  const anyItems=persons.some(p=>Object.keys(p.cart).length>0);
+  bar.classList.toggle('show',anyItems);
+  if(anyItems){
+    document.getElementById('grandTotalAmt').textContent=rp(grand);
+    document.getElementById('grandPersonsBreakdown').textContent=persons.map((p,i)=>{const s=Object.values(p.cart).reduce((ps,it)=>ps+it.price,0);return s>0?'Org '+(i+1)+': '+rp(s):null;}).filter(Boolean).join(' | ');
+  }
+  document.getElementById('btnStep3Next').disabled=!anyItems;
+}
+
+function updateTherapistInfo(){
+  const jam=v('f-jam');const info=getTherapistInfo(jam);
+  const box=document.getElementById('therapistInfo');
+  if(!info){box.classList.remove('show');return;}
+  box.classList.add('show');
+  const chips=[
+    `<span class="t-chip available">&#128101; ${info.total} terapis tersedia</span>`,
+    info.male>0?`<span class="t-chip available">&#128084; ${info.male} terapis pria</span>`:`<span class="t-chip limited">&#128084; Tidak ada terapis pria</span>`,
+    `<span class="t-chip available">&#128105; ${info.female} terapis wanita</span>`,
+  ];
+  document.getElementById('therapistChips').innerHTML=chips.join('');
+}
+
+function selectVisit(el,type){
+  visitType=type;
+  document.querySelectorAll('.radio-opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');
+  document.getElementById('visit-err').style.display='none';
+  document.getElementById('homeFields').classList.toggle('show',type==='home');
+}
+
+function req(id,fgId){const el=document.getElementById(id);const fg=document.getElementById(fgId);const ok=!!(el&&el.value.trim());fg?.classList.toggle('has-error',!ok);return ok;}
+function validateAndGoSummary(){
+  let ok=true;
+  ok=req('f-nama','fg-nama')&&ok;ok=req('f-wa','fg-wa')&&ok;ok=req('f-gender','fg-gender')&&ok;
+  ok=req('f-tanggal','fg-tanggal')&&ok;ok=req('f-jam','fg-jam')&&ok;
+  ok=req('f-kecamatan','fg-kecamatan')&&ok;ok=req('f-kota','fg-kota')&&ok;
+  if(!visitType){document.getElementById('visit-err').style.display='block';ok=false;}
+  if(visitType==='home'){ok=req('f-alamat','fg-alamat')&&ok;ok=req('f-kelurahan','fg-kelurahan')&&ok;}
+  if(!document.getElementById('f-consent').checked){document.getElementById('consent-err').style.display='block';ok=false;}else{document.getElementById('consent-err').style.display='none';}
+  if(!ok){document.querySelector('.has-error .form-input')?.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  goStep(5);
+}
+
+function formatDate(str){if(!str)return'';return new Date(str+'T12:00:00').toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+function buildSummary(){
+  const vl=visitType==='salon'?'Datang ke Salon':visitType==='home'?'Home Service':'Tanya Admin';
+  const grand=persons.reduce((s,p)=>s+Object.values(p.cart).reduce((ps,i)=>ps+i.price,0),0);
+  document.getElementById('summaryMeta').innerHTML=`
+    <div class="summary-row"><span class="summary-key">Pemesan</span><span class="summary-val">${v('f-nama')}</span></div>
+    <div class="summary-row"><span class="summary-key">WhatsApp</span><span class="summary-val">${v('f-wa')}</span></div>
+    <div class="summary-row"><span class="summary-key">Tanggal</span><span class="summary-val">${formatDate(v('f-tanggal'))}</span></div>
+    <div class="summary-row"><span class="summary-key">Jam</span><span class="summary-val">${v('f-jam')} WIB</span></div>
+    <div class="summary-row"><span class="summary-key">Jumlah Orang</span><span class="summary-val">${numPersons} orang</span></div>
+    <div class="summary-row"><span class="summary-key">Lokasi</span><span class="summary-val">${vl}</span></div>
+    <div class="summary-row"><span class="summary-key">Area</span><span class="summary-val">${v('f-kecamatan')}, ${v('f-kota')}</span></div>
+    ${v('f-catatan')?'<div class="summary-row"><span class="summary-key">Catatan</span><span class="summary-val">'+v('f-catatan')+'</span></div>':''}
+  `;
+  document.getElementById('summaryPersons').innerHTML=persons.map((p,i)=>{
+    const ids=Object.keys(p.cart);const sub=ids.reduce((s,id)=>s+p.cart[id].price,0);
+    if(!ids.length)return`<div class="summary-person-card"><div class="summary-person-header"><span>Orang ${i+1}</span><strong style="color:var(--text-lt);font-size:.8rem">Tidak ada treatment dipilih</strong></div></div>`;
+    return`<div class="summary-person-card"><div class="summary-person-header"><span>Orang ${i+1}</span><strong>${rp(sub)}</strong></div><div class="summary-person-items">${ids.map(id=>`<div class="summary-tr-row"><span>${p.cart[id].name}${p.cart[id].dur?' – '+p.cart[id].dur:''}</span><span style="color:var(--primary);font-weight:700">${rp(p.cart[id].price)}</span></div>`).join('')}</div></div>`;
+  }).join('');
+  document.getElementById('summaryTotal').innerHTML=`<span>Total Estimasi (${numPersons} orang)</span><strong>${rp(grand)}</strong>`;
+}
+
+async function submitBooking(){
+  const grand=persons.reduce((s,p)=>s+Object.values(p.cart).reduce((ps,i)=>ps+i.price,0),0);
+  const vl=visitType==='salon'?'Datang ke Salon':visitType==='home'?'Home Service':'Tanya Admin';
+  const treatmentsSummary=persons.map((p,i)=>{const ids=Object.keys(p.cart);return ids.length?'Orang '+(i+1)+': '+ids.map(id=>p.cart[id].name+(p.cart[id].dur?' ('+p.cart[id].dur+')':'')+' '+rp(p.cart[id].price)).join(', '):'Orang '+(i+1)+': (tidak ada treatment)';}).join(' | ');
+  const payload={timestamp:new Date().toISOString(),nama:v('f-nama'),whatsapp:v('f-wa'),gender:v('f-gender'),needCategory:NEEDS.find(n=>n.id===selectedNeed)?.label||'',jumlahOrang:numPersons,treatments:treatmentsSummary,estimatedTotal:grand,tanggal:v('f-tanggal'),jam:v('f-jam'),visitType:vl,kecamatan:v('f-kecamatan'),kota:v('f-kota'),kelurahan:v('f-kelurahan')||'',alamat:v('f-alamat')||'',catatan:v('f-catatan'),leadSource:'Booking Page',pageURL:window.location.href,status:'New Lead'};
+  if(CONFIG.googleScriptURL){try{await fetch(CONFIG.googleScriptURL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});}catch(e){console.warn('Sheet:',e);}}
+  goStep(6);
+}
+
+function buildSuccess(){
+  const grand=persons.reduce((s,p)=>s+Object.values(p.cart).reduce((ps,i)=>ps+i.price,0),0);
+  const vl=visitType==='salon'?'di salon':visitType==='home'?'home service':'(konfirmasi dengan admin)';
+  let lines=persons.map((p,i)=>{const ids=Object.keys(p.cart);if(!ids.length)return null;return'Orang '+(i+1)+':\n'+ids.map(id=>'  - '+p.cart[id].name+(p.cart[id].dur?' ('+p.cart[id].dur+')':'')+' '+rp(p.cart[id].price)).join('\n');}).filter(Boolean).join('\n\n');
+  const msg='Halo Rumah Wangi 🌸 saya sudah mengisi formulir reservasi.\n\nPemesan: '+v('f-nama')+'\nWA: '+v('f-wa')+'\nTanggal: '+formatDate(v('f-tanggal'))+'\nJam: '+v('f-jam')+' WIB\nJumlah orang: '+numPersons+' orang\nLokasi: '+vl+'\nArea: '+v('f-kecamatan')+', '+v('f-kota')+'\n\nRincian treatment:\n'+lines+'\n\nTotal estimasi: '+rp(grand)+(v('f-catatan')?'\n\nCatatan: '+v('f-catatan'):'')+'\n\nMohon dibantu konfirmasi jadwal dan ketersediaan slot. Terima kasih! 🙏';
+  document.getElementById('waPreview').textContent=msg;
+  document.getElementById('waFinalBtn').href='https://wa.me/'+CONFIG.waNumber+'?text='+enc(msg);
+}
+
+function resetForm(){
+  selectedNeed=null;activeCats=[];numPersons=0;persons=[];activePersonIdx=0;visitType='';
+  document.getElementById('bookingForm')?.reset();
+  document.querySelectorAll('.need-card,.radio-opt,.person-btn').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('homeFields').classList.remove('show');
+  document.getElementById('btnStep2Next').disabled=true;
+  goStep(1);
+}
+
+function renderFAQ(){document.getElementById('faqList').innerHTML=FAQ_DATA.map((f,i)=>`<div class="faq-item" id="faq-${i}"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>${f.q}</span><span class="faq-icon"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="1" x2="7" y2="13"/><line x1="1" y1="7" x2="13" y2="7"/></svg></span></div><div class="faq-a">${f.a}</div></div>`).join('');}
+
+function setVH(){document.documentElement.style.setProperty('--vh',(window.innerHeight*.01)+'px');}
+setVH();window.addEventListener('resize',setVH,{passive:true});
+</script>
+</body>
+</html>
